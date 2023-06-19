@@ -81,7 +81,7 @@ p{
       {% else %}
       <tr class = 'others'>
           <td>{{ row['Company'] }}</td>
-          <td>{{ row['Price'] }}</td>
+          <td>{{ row['Price']|round(2) }}</td>
           <td>{{ row['Invested'] }} <small>( {{ (100*row['Invested']/df['Invested'][df.shape[0] - 1])|round(2) }} %)</small></td>
           <td>{{ row['Value'] }}</td>
           {% if row['Returns Today'] >= 0 %}

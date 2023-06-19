@@ -50,9 +50,9 @@ def home():
 
         stocks = yf.download(tickers = ["ACCELYA.NS", "AFFLE.NS", "DEEPAKFERT.NS", "FEDERALBNK.NS", "UJJIVANSFB.NS", "ITC.NS", "TATASTEEL.NS", "HINDALCO.NS", "MPHASIS.NS", "AMARAJABAT.NS"], period="1d")
         mutual_funds_price = yf.download(tickers = ['0P0000K1D7.BO', '0P0000U9KG.BO'], period="1mo")['Adj Close'].iloc[-1]
-        mutual_funds_price = np.round(mutual_funds_price.values, decimals = 2)
+        mutual_funds_price = mutual_funds_price.values
         mutual_funds_price = mutual_funds_price.tolist()
-        price = np.round(stocks["Adj Close"].values, decimals = 2)
+        price = stocks["Adj Close"].values
         columns = ["Accelya Solutions", "Affle", "Amara Raja Batteries", "Deepak Fertilizers", "Federal Bank", "Hindalco", "ITC", "Mphasis", "Tata Steel", "Ujjivan", "Aditya Birla Sun Life Medium Term (G)", "Axis Gold (G)"]
         price = price.tolist()
         price = price.pop(0)
