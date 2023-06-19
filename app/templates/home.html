@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+.table{
+    table-layout: auto;
+    margin: auto;
+  }
+
+thead{
+    background-color: darkgreen;
+    opacity: 0.8;
+  }
+
+thead th{
+    font-size: 1.7svw;
+    color:white;
+  }
+
+td:nth-child(1){
+    width: 25%;
+  }
+
+td{
+    font-size: 2rem;
+  }
+
+td.postive{
+    color: green;
+  }
+
+td.negative{
+    color: red;
+  }
+
+tr.total{
+    font-size: larger;
+    font-weight: bold;
+  }
+
+p{
+  margin-top: 0.5%;
+  margin-left: 0.25%;
+  margin-right: 0.25%;
+}
+</style>
+
+<div id = 'table_div'>
+  <table id = 'returns' class = 'table table-striped'>
+    <thead>
+      <tr>
+          <th>Stock/ Fund Name</th>
+          <th>Price (₹)</th>
+          <th>Investment (₹)</th>
+          <th>Value (₹)</th>
+          <th>Gain Today (₹)</th>
+          <th>Returns (%)</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for index, row in df.iterrows() %}
+      {% if row['Company'] == 'Total' %}  
+      <tr class = 'total'>
+          <td>{{ row['Company'] }}</td>
+          <td class = 'transparent'></td>
+          <td>{{ row['Invested'] }}</td>
+          <td>{{ row['Value'] }}</td>
+          {% if row['Returns Today'] >= 0 %}
+          <td class = 'postive'>+{{ row['Returns Today']|round(2) }} <small>( {{ row['Today Percentage']|round(2) }} %)</small></td>
+          {% else %}
+          <td class = 'negative'>{{ row['Returns Today']|round(2) }}  <small>( {{ row['Today Percentage']|round(2) }} %)</small></td>
+          {% endif %}
+          {% if row['Return'] >= 0 %}
+          <td class = 'postive'>+{{ row['Return'] }}%</td>
+          {% else %}
+          <td class = 'negative'>{{ row['Return'] }}%</td>
+          {% endif %}
+      </tr>
+
+      {% else %}
+      <tr class = 'others'>
+          <td>{{ row['Company'] }}</td>
+          <td>{{ row['Price'] }}</td>
+          <td>{{ row['Invested'] }} <small>( {{ (100*row['Invested']/df['Invested'][df.shape[0] - 1])|round(2) }} %)</small></td>
+          <td>{{ row['Value'] }}</td>
+          {% if row['Returns Today'] >= 0 %}
+          <td class = 'postive'>+{{ row['Returns Today']|round(2) }} <small>( {{ row['Today Percentage']|round(2) }} %)</small></td>
+          {% else %}
+          <td class = 'negative'>{{ row['Returns Today']|round(2) }} <small>( {{ row['Today Percentage']|round(2) }} %)</small></td>
+          {% endif %}
+          {% if row['Return'] >= 0 %}
+          <td class = 'postive'>+{{ row['Return'] }}%</td>
+          {% else %}
+          <td class = 'negative'>{{ row['Return'] }}%</td>
+          {% endif %}
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  <p><b>Note:</b> Prices and values are delayed by 20 minutes. The table is intended to enable tracking of investment value and composition. Trading decisions should not be made based on this table. The developer will not responsible for any losses made.</p>
+</div>
+
+
+</div>
+
+<script>
+  setInterval(function() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', "{{ url_for('home') }}");
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              var newContent = xhr.responseText;
+              document.getElementById('table_div').innerHTML = newContent;
+          }
+      };
+      xhr.send();
+  }, 3000);
+</script>
+
+{% endblock %}
