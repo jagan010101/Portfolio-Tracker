@@ -25,10 +25,13 @@ def start():
 
 def stop():
     signal = 0
-    conn = sqlite3.connect('app.db')
+    app.app_context().push()
+    conn = sqlite3.connect('instance/db.sqlite3')
     cursor = conn.cursor()
-    for stock in df.itterows():
-        cursor.execute('''UPDATE yesterday SET yesterday = stock["Value"] WHERE name = stock["Company"]''')
+    for index in range(len(df)):
+        update = "UPDATE yesterday SET yesterday = ? WHERE name = ?"
+        values = (df.loc[index, 'Value'], df.loc[index, 'Company'])
+        cursor.execute(update, values)
     conn.commit()
     conn.close()
     return
@@ -79,20 +82,19 @@ def home():
         df = pd.DataFrame(list(zip(stock_names, price_list, stock_values, stock_amount)), columns = ["Company", "Price", "Value", "Invested"])
         df["Return"] = df.apply(lambda x: 100 * (x["Value"] / x["Invested"] - 1), axis = 1)
         df['Return'] = df['Return'].astype(float)
-        #df = pd.concat([df, df[['Value','Invested']].sum()], ignore_index = True)
-        df = df.append(df[['Value','Invested']].sum(), ignore_index = True)
-        df["Return"][df.shape[0] - 1] = round(100 * (df["Value"][df.shape[0] - 1] / df["Invested"][df.shape[0] - 1] - 1), 2)
+        df_sum = pd.DataFrame({'Company': ['Total'], 'Price': [0], 'Value': [df['Value'].sum()], 'Invested': [df['Invested'].sum()]})
+        df = pd.concat([df, df_sum], ignore_index = True)
+        #df = df.append(df[['Value','Invested']].sum(), ignore_index = True)
+        df.loc[df.shape[0] - 1, "Return"] = round(100 * (df["Value"][df.shape[0] - 1] / df["Invested"][df.shape[0] - 1] - 1), 2)
         df["Return"] = df["Return"].apply(lambda x: round(x, 2))
         df["Value"] = df["Value"].apply(lambda x: round(x, 2))
-        df["Company"][df.shape[0] - 1] = "Total"
+        df.loc[df.shape[0] - 1, "Company"] = "Total"
         df["Yesterday"] = 0
 
         for index, stock in enumerate(Yesterday.query.all()):
-            df["Yesterday"][index] = stock.yesterday
+            df.loc[index, 'Yesterday'] = stock.yesterday
         
         df["Returns Today"] = df["Value"] - df["Yesterday"]
         df["Today Percentage"] = 100 * (df["Returns Today"] / df["Yesterday"])
     
     return render_template('home.html', title='Stocks', df = df, signal = signal)
-
-
