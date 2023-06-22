@@ -16,9 +16,8 @@ migrate = Migrate(app, db)
 bootstrap = Bootstrap(app)
 
 from app import routes, models
-from app.routes import start, stop
+from app.routes import update
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(start, 'cron', day_of_week= 'mon-fri', hour = 9, minute = 15, id = 'start')
-scheduler.add_job(stop, 'cron', day_of_week= 'mon-fri', hour = 16, minute = 30, id = 'stop')
+scheduler.add_job(update, 'cron', day_of_week= 'mon-sun', hour = 0, minute = 0, id = 'update_yesterday')
 scheduler.start()

@@ -106,17 +106,22 @@ p{
 </div>
 
 <script>
-  setInterval(function() {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', "{{ url_for('home') }}");
-      xhr.onreadystatechange = function() {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-              var newContent = xhr.responseText;
-              document.getElementById('table_div').innerHTML = newContent;
-          }
-      };
-      xhr.send();
-  }, 3000);
+      var intervalFunction = setInterval(function() {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', "{{ url_for('home') }}");
+          xhr.onreadystatechange = function() {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                  var newContent = xhr.responseText;
+                  document.getElementById('table_div').innerHTML = newContent;
+              }
+          };
+          xhr.send();
+      }, 3000);
+
+/*       setTimeout(function() {
+      clearInterval(intervalFunction);
+      }, 24300000);
+ */
 </script>
 
  {% endblock %}
