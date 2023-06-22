@@ -54,7 +54,7 @@ p{
           <th>Investment (₹)</th>
           <th>Value (₹)</th>
           <th>Gain Today (₹)</th>
-          <th>Returns (%)</th>
+          <th>Returns (₹)</th>
       </tr>
     </thead>
 
@@ -65,16 +65,16 @@ p{
           <td>{{ row['Company'] }}</td>
           <td class = 'transparent'></td>
           <td>{{ row['Invested'] }}</td>
-          <td>{{ row['Value'] }}</td>
-          {% if row['Returns Today'] >= 0 %}
-          <td class = 'postive'>+{{ row['Returns Today']|round(2) }} <small>( {{ row['Today Percentage']|round(2) }} %)</small></td>
+          <td>{{ row['Value']|round(2) }}</td>
+          {% if row['Gain Today'] >= 0 %}
+          <td class = 'postive'>+{{ row['Gain Today']|round(2) }} <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
           {% else %}
-          <td class = 'negative'>{{ row['Returns Today']|round(2) }}  <small>( {{ row['Today Percentage']|round(2) }} %)</small></td>
+          <td class = 'negative'>{{ row['Gain Today']|round(2) }}  <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
           {% endif %}
-          {% if row['Return'] >= 0 %}
-          <td class = 'postive'>+{{ row['Return'] }}%</td>
+          {% if row['Returns'] >= 0 %}
+          <td class = 'postive'>+{{ row['Returns']|round(2) }}</td>
           {% else %}
-          <td class = 'negative'>{{ row['Return'] }}%</td>
+          <td class = 'negative'>{{ row['Returns']|round(2) }}</td>
           {% endif %}
       </tr>
 
@@ -83,16 +83,16 @@ p{
           <td>{{ row['Company'] }}</td>
           <td>{{ row['Price']|round(2) }}</td>
           <td>{{ row['Invested'] }} <small>( {{ (100*row['Invested']/df['Invested'][df.shape[0] - 1])|round(2) }} %)</small></td>
-          <td>{{ row['Value'] }}</td>
-          {% if row['Returns Today'] >= 0 %}
-          <td class = 'postive'>+{{ row['Returns Today']|round(2) }} <small>( {{ row['Today Percentage']|round(2) }} %)</small></td>
+          <td>{{ row['Value']|round(2) }}</td>
+          {% if row['Gain Today'] >= 0 %}
+          <td class = 'postive'>+{{ row['Gain Today']|round(2) }} <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
           {% else %}
-          <td class = 'negative'>{{ row['Returns Today']|round(2) }} <small>( {{ row['Today Percentage']|round(2) }} %)</small></td>
+          <td class = 'negative'>{{ row['Gain Today']|round(2) }} <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
           {% endif %}
-          {% if row['Return'] >= 0 %}
-          <td class = 'postive'>+{{ row['Return'] }}%</td>
+          {% if row['Returns'] >= 0 %}
+          <td class = 'postive'>+{{ row['Returns']|round(2) }}</td>
           {% else %}
-          <td class = 'negative'>{{ row['Return'] }}%</td>
+          <td class = 'negative'>{{ row['Returns']|round(2) }}</td>
           {% endif %}
       </tr>
       {% endif %}
@@ -119,4 +119,4 @@ p{
   }, 3000);
 </script>
 
-{% endblock %}
+ {% endblock %}
