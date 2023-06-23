@@ -99,7 +99,7 @@ p{
       {% endfor %}
     </tbody>
   </table>
-  <p><b>Disclaimer:</b> Prices and values are delayed by 20 minutes. The table is intended to enable tracking of investment value and composition. Trading decisions should not be made based on this table. The developer will not responsible for any losses made.</p>
+  <p><b>Disclaimer:</b> Prices and values are delayed by several minutes. The table is intended to enable tracking of investment value and composition. Trading decisions should not be made based on this table. The developer will not responsible for any losses made.</p>
 </div>
 
 
@@ -118,10 +118,11 @@ p{
           xhr.send();
       }, 3000);
 
-/*       setTimeout(function() {
+      setTimeout(function() {
       clearInterval(intervalFunction);
-      }, 24300000);
- */
+      alert("Session Timed Out")
+      }, 1200000);
+ 
 </script>
 
  {% endblock %}
