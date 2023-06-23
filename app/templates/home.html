@@ -13,7 +13,7 @@ thead{
   }
 
 thead th{
-    font-size: 1.7svw;
+    font-size: 1.8svw;
     color:white;
   }
 
@@ -72,9 +72,9 @@ p{
           <td class = 'negative'>{{ row['Gain Today']|round(2) }}  <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
           {% endif %}
           {% if row['Returns'] >= 0 %}
-          <td class = 'postive'>+{{ row['Returns']|round(2) }}</td>
+          <td class = 'postive'>+{{ row['Returns']|round(2) }}<small>( {{ (100*row['Returns']/row['Invested'])|round(2) }} %)</small></td>
           {% else %}
-          <td class = 'negative'>{{ row['Returns']|round(2) }}</td>
+          <td class = 'negative'>{{ row['Returns']|round(2) }}<small>( {{ (100*row['Returns']/row['Invested'])|round(2) }} %)</small></td>
           {% endif %}
       </tr>
 
@@ -90,9 +90,9 @@ p{
           <td class = 'negative'>{{ row['Gain Today']|round(2) }} <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
           {% endif %}
           {% if row['Returns'] >= 0 %}
-          <td class = 'postive'>+{{ row['Returns']|round(2) }}</td>
+          <td class = 'postive'>+{{ row['Returns']|round(2) }} <small>( {{ (100*row['Returns']/row['Invested'])|round(2) }} %)</small></td>
           {% else %}
-          <td class = 'negative'>{{ row['Returns']|round(2) }}</td>
+          <td class = 'negative'>{{ row['Returns']|round(2) }} <small>( {{ (100*row['Returns']/row['Invested'])|round(2) }} %)</small></td>
           {% endif %}
       </tr>
       {% endif %}
