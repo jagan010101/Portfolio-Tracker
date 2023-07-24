@@ -2,6 +2,10 @@
 {% block content %}
 
 <style>
+div{
+  width:100%
+}
+
 .table{
     table-layout: auto;
     margin: auto;
@@ -13,7 +17,7 @@ thead{
   }
 
 thead th{
-    font-size: 1.8svw;
+    font-size: 2.75rem;
     color:white;
   }
 
@@ -64,17 +68,17 @@ p{
       <tr class = 'total'>
           <td>{{ row['Company'] }}</td>
           <td class = 'transparent'></td>
-          <td>{{ row['Invested'] }}</td>
+          <td>{{ row['Invested']|round(2) }}</td>
           <td>{{ row['Value']|round(2) }}</td>
           {% if row['Gain Today'] >= 0 %}
-          <td class = 'postive'>+{{ row['Gain Today']|round(2) }} <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
+          <td class = 'postive'>+{{ row['Gain Today']|round(2) }} <small>({{ row['Gain Today %']|round(2) }}%)</small></td>
           {% else %}
-          <td class = 'negative'>{{ row['Gain Today']|round(2) }}  <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
+          <td class = 'negative'>{{ row['Gain Today']|round(2) }}  <small>({{ row['Gain Today %']|round(2) }}%)</small></td>
           {% endif %}
           {% if row['Returns'] >= 0 %}
-          <td class = 'postive'>+{{ row['Returns']|round(2) }}<small>( {{ (100*row['Returns']/row['Invested'])|round(2) }} %)</small></td>
+          <td class = 'postive'>+{{ row['Returns']|round(2) }} <small>({{ (100*row['Returns']/row['Invested'])|round(2) }}%)</small></td>
           {% else %}
-          <td class = 'negative'>{{ row['Returns']|round(2) }}<small>( {{ (100*row['Returns']/row['Invested'])|round(2) }} %)</small></td>
+          <td class = 'negative'>{{ row['Returns']|round(2) }} <small>({{ (100*row['Returns']/row['Invested'])|round(2) }}%)</small></td>
           {% endif %}
       </tr>
 
@@ -85,14 +89,14 @@ p{
           <td>{{ row['Invested'] }} <small>( {{ (100*row['Invested']/df['Invested'][df.shape[0] - 1])|round(2) }} %)</small></td>
           <td>{{ row['Value']|round(2) }}</td>
           {% if row['Gain Today'] >= 0 %}
-          <td class = 'postive'>+{{ row['Gain Today']|round(2) }} <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
+          <td class = 'postive'>+{{ row['Gain Today']|round(2) }} <small>({{ row['Gain Today %']|round(2) }}%)</small></td>
           {% else %}
-          <td class = 'negative'>{{ row['Gain Today']|round(2) }} <small>( {{ row['Gain Today %']|round(2) }} %)</small></td>
+          <td class = 'negative'>{{ row['Gain Today']|round(2) }} <small>({{ row['Gain Today %']|round(2) }}%)</small></td>
           {% endif %}
           {% if row['Returns'] >= 0 %}
-          <td class = 'postive'>+{{ row['Returns']|round(2) }} <small>( {{ (100*row['Returns']/row['Invested'])|round(2) }} %)</small></td>
+          <td class = 'postive'>+{{ row['Returns']|round(2) }} <small>({{ (100*row['Returns']/row['Invested'])|round(2) }}%)</small></td>
           {% else %}
-          <td class = 'negative'>{{ row['Returns']|round(2) }} <small>( {{ (100*row['Returns']/row['Invested'])|round(2) }} %)</small></td>
+          <td class = 'negative'>{{ row['Returns']|round(2) }} <small>({{ (100*row['Returns']/row['Invested'])|round(2) }}%)</small></td>
           {% endif %}
       </tr>
       {% endif %}
@@ -100,9 +104,7 @@ p{
     </tbody>
   </table>
   <p><b>Disclaimer:</b> Prices and values are delayed by several minutes. The table is intended to enable tracking of investment value and composition. Trading decisions should not be made based on this table. The developer will not responsible for any losses made.</p>
-</div>
-
-
+  <p><b>Source:</b>Yahoo Finance</p>
 </div>
 
 <script>
